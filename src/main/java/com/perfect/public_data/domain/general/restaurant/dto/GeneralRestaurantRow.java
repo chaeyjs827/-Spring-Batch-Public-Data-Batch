@@ -7,9 +7,10 @@ import lombok.Setter;
 @Setter
 public class GeneralRestaurantRow {
 
-    private String name;
-    private Integer age;
-    private String email;
-
+    private Long id;
+    private String openServiceName;
+    private Long openServiceId;
+    private String openLocalGovermentCode;
+    private Long manageId;
 
 }

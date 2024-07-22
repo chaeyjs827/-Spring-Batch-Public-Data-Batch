@@ -9,3 +9,10 @@ spring:
       enabled: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      schema-locations: classpath:sql/h2-config-schema.sql, classpath:sql/schema.sql

@@ -1,0 +1,6 @@
+id, open_service_name, open_service_id, open_local_goverment_code, manage_id
+1,   TEST, 1, GOVERMENT-1, 1
+2, TEST-2, 2, GOVERMENT-2, 2
+3, TEST-3, 3, GOVERMENT-3, 3
+4, TEST-4, 4, GOVERMENT-4, 4
+5, TEST-5, 5, GOVERMENT-5, 5
