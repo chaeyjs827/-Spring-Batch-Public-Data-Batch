@@ -13,7 +13,56 @@ public class GeneralRestaurantLineMapper implements LineMapper<GeneralRestaurant
 
     public GeneralRestaurantLineMapper() {
         this.tokenizer = new DelimitedLineTokenizer();
-        this.tokenizer.setNames("id", "open_service_name", "open_service_id", "open_local_goverment_code", "manage_id");
+        this.tokenizer.setNames(
+                "id",
+                "openServiceName",
+                "openServiceId",
+                "openLocalGovermentCode",
+                "managementNumber",
+                "permissionDate",
+                "permissionCancellationDate",
+                "businessStatusClassificationCode",
+                "businessStatusName",
+                "detailedBusinessStatusCode",
+                "detailedBusinessStatusName",
+                "closureDate",
+                "closureStartDate",
+                "closureEndDate",
+                "reopeningDate",
+                "locationPhone",
+                "locationArea",
+                "locationZipCode",
+                "locationFullAddress",
+                "roadNameFullAddress",
+                "roadNameZipCode",
+                "businessEstablishmentName",
+                "lastModifiedTime",
+                "dataUpdateClassification",
+                "dataUpdateDate",
+                "businessTypeClassification",
+                "coordinateInformationX",
+                "coordinateInformationY",
+                "sanitationBusinessType",
+                "numberOfMaleEmployees",
+                "numberOfFemaleEmployees",
+                "businessAreaClassification",
+                "gradeClassification",
+                "waterSupplyFacilityClassification",
+                "totalNumberOfEmployees",
+                "numberOfHeadOfficeEmployees",
+                "numberOfFactoryOfficeEmployees",
+                "numberOfFactorySalesEmployees",
+                "numberOfFactoryProductionEmployees",
+                "buildingOwnershipClassification",
+                "depositAmount",
+                "monthlyRent",
+                "whetherItIsAMultiUseEstablishment",
+                "totalFacilitySize",
+                "traditionalBusinessDesignationNumber",
+                "traditionalBusinessMainFood",
+                "homepage",
+                "blank"
+    );
 
         this.fieldSetMapper = new BeanWrapperFieldSetMapper<>();
         this.fieldSetMapper.setTargetType(GeneralRestaurantRow.class);
@@ -21,8 +70,8 @@ public class GeneralRestaurantLineMapper implements LineMapper<GeneralRestaurant
 
     @Override
     public GeneralRestaurantRow mapLine(String line, int lineNumber) throws Exception {
-        if (line == null || line.trim().isEmpty()) {
-            return null; // 빈 줄이나 파일 끝을 처리
+        if (line.trim().isEmpty()) {
+            return null;
         }
 
         FieldSet fieldSet = tokenizer.tokenize(line);

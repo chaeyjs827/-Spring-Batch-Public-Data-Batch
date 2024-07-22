@@ -2,6 +2,7 @@ package com.perfect.public_data.domain.general.restaurant.step;
 
 import com.perfect.public_data.domain.general.restaurant.dto.GeneralRestaurantRow;
 import com.perfect.public_data.domain.general.restaurant.mapper.GeneralRestaurantLineMapper;
+import com.perfect.public_data.domain.general.restaurant.policy.GeneralRestaurantSkipPolicy;
 import com.perfect.public_data.domain.general.restaurant.repository.GerneralRestaurantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Step;
@@ -16,9 +17,14 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Configuration
@@ -52,19 +58,74 @@ public class StandardDataSaveReadAndSaveStep implements StepExecutionListener {
                 .<GeneralRestaurantRow, GeneralRestaurantRow> chunk(CHUNK_SIZE, platformTransactionManager)
                 .reader(reader())
                 .writer(writer())
+                .faultTolerant()
+                .skipPolicy(customSkipPolicy())
                 .build();
     }
 
     @Bean(STEP_NAME + "reader")
     @StepScope
-    public FlatFileItemReader<GeneralRestaurantRow> reader() {
+    public FlatFileItemReader<GeneralRestaurantRow> reader() throws IOException {
+        Resource resource = new ClassPathResource("general-restaurant/all.csv");
+
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)
+        );
+
         return new FlatFileItemReaderBuilder<GeneralRestaurantRow>()
                 .name("personItemReader")
-                .resource(new ClassPathResource("general-restaurant/test.csv"))
+                .resource(resource)
+//                .resource(new ClassPathResource("general-restaurant/head_50000.csv"))
                 .delimited()
                 .names(new String[]{
-                        "id", "open_service_name", "open_service_id", "open_local_goverment_code",
-                        "manage_id"
+                        "id",
+                        "openServiceName",
+                        "openServiceId",
+                        "openLocalGovermentCode",
+                        "managementNumber",
+                        "permissionDate",
+                        "permissionCancellationDate",
+                        "businessStatusClassificationCode",
+                        "businessStatusName",
+                        "detailedBusinessStatusCode",
+                        "detailedBusinessStatusName",
+                        "closureDate",
+                        "closureStartDate",
+                        "closureEndDate",
+                        "reopeningDate",
+                        "locationPhone",
+                        "locationArea",
+                        "locationZipCode",
+                        "locationFullAddress",
+                        "roadNameFullAddress",
+                        "roadNameZipCode",
+                        "businessEstablishmentName",
+                        "lastModifiedTime",
+                        "dataUpdateClassification",
+                        "dataUpdateDate",
+                        "businessTypeClassification",
+                        "coordinateInformationX",
+                        "coordinateInformationY",
+                        "sanitationBusinessType",
+                        "numberOfMaleEmployees",
+                        "numberOfFemaleEmployees",
+                        "businessAreaClassification",
+                        "gradeClassification",
+                        "waterSupplyFacilityClassification",
+                        "totalNumberOfEmployees",
+                        "numberOfHeadOfficeEmployees",
+                        "numberOfFactoryOfficeEmployees",
+                        "numberOfFactorySalesEmployees",
+                        "numberOfFactoryProductionEmployees",
+                        "buildingOwnershipClassification",
+                        "depositAmount",
+                        "monthlyRent",
+                        "whetherItIsAMultiUseEstablishment",
+                        "totalFacilitySize",
+                        "traditionalBusinessDesignationNumber",
+                        "traditionalBusinessMainFood",
+                        "homepage",
+                        "blank"
                 })
                 .lineMapper(new GeneralRestaurantLineMapper())
                 .linesToSkip(1)
@@ -78,6 +139,11 @@ public class StandardDataSaveReadAndSaveStep implements StepExecutionListener {
             List<GeneralRestaurantRow> list = (List<GeneralRestaurantRow>) chunk.getItems();
             gerneralRestaurantRepository.insertBulk(list);
         };
+    }
+
+    @Bean
+    public GeneralRestaurantSkipPolicy customSkipPolicy() {
+        return new GeneralRestaurantSkipPolicy();
     }
 
 }
