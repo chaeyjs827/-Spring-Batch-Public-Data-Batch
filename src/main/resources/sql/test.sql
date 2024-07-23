@@ -1,0 +1,17 @@
+-- 외래 키 제약 조건 비활성화
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE public_data_batch_JOB_EXECUTION_CONTEXT;
+TRUNCATE TABLE public_data_batch_JOB_EXECUTION_PARAMS;
+TRUNCATE TABLE public_data_batch_JOB_EXECUTION_SEQ;
+TRUNCATE TABLE public_data_batch_JOB_SEQ;
+TRUNCATE TABLE public_data_batch_STEP_EXECUTION_SEQ;
+TRUNCATE TABLE public_data_batch_STEP_EXECUTION_CONTEXT;
+TRUNCATE TABLE public_data_batch_JOB_EXECUTION;
+TRUNCATE TABLE public_data_batch_JOB_INSTANCE;
+TRUNCATE TABLE public_data_batch_JOB_EXECUTION;
+
+TRUNCATE TABLE general_restaurant;
+
+-- 외래 키 제약 조건 활성화
+SET FOREIGN_KEY_CHECKS = 1;

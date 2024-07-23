@@ -1,6 +1,7 @@
 package com.perfect.public_data.domain.general.restaurant.step;
 
 import com.perfect.public_data.domain.general.restaurant.dto.GeneralRestaurantRow;
+import com.perfect.public_data.domain.general.restaurant.listener.GeneralRestaurantReadListener;
 import com.perfect.public_data.domain.general.restaurant.mapper.GeneralRestaurantLineMapper;
 import com.perfect.public_data.domain.general.restaurant.policy.GeneralRestaurantSkipPolicy;
 import com.perfect.public_data.domain.general.restaurant.repository.GerneralRestaurantRepository;
@@ -22,6 +23,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -66,7 +68,11 @@ public class StandardDataSaveReadAndSaveStep implements StepExecutionListener {
     @Bean(STEP_NAME + "reader")
     @StepScope
     public FlatFileItemReader<GeneralRestaurantRow> reader() throws IOException {
-        Resource resource = new ClassPathResource("general-restaurant/all.csv");
+        Resource resource = new ClassPathResource("general-restaurant/head_5000.csv");
+
+        if (!resource.exists()) {
+            throw new FileNotFoundException("파일이 존재하지 않습니다. : " + resource.getFilename());
+        }
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)
@@ -75,7 +81,6 @@ public class StandardDataSaveReadAndSaveStep implements StepExecutionListener {
         return new FlatFileItemReaderBuilder<GeneralRestaurantRow>()
                 .name("personItemReader")
                 .resource(resource)
-//                .resource(new ClassPathResource("general-restaurant/head_50000.csv"))
                 .delimited()
                 .names(new String[]{
                         "id",
