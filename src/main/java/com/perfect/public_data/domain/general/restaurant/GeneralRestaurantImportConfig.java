@@ -1,7 +1,7 @@
 package com.perfect.public_data.domain.general.restaurant;
 
 import com.perfect.public_data.domain.general.restaurant.listener.GeneralRestaurantJobListener;
-import com.perfect.public_data.domain.general.restaurant.step.StandardDataSaveReadAndSaveStep;
+import com.perfect.public_data.domain.general.restaurant.step.GeneralRestaurantReadAndSaveStep;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
@@ -18,16 +18,16 @@ public class GeneralRestaurantImportConfig {
     public static final String JOB_NAME = "generalRestaurantImportJob";
 
     private final JobRepository jobRepository;
-    private final StandardDataSaveReadAndSaveStep standardDataSaveReadAndSaveStep;
+    private final GeneralRestaurantReadAndSaveStep generalRestaurantReadAndSaveStep;
     private final GeneralRestaurantJobListener generalRestaurantJobListener;
 
     public GeneralRestaurantImportConfig(
             JobRepository jobRepository
-            , StandardDataSaveReadAndSaveStep standardDataSaveReadAndSaveStep
+            , GeneralRestaurantReadAndSaveStep generalRestaurantReadAndSaveStep
             , GeneralRestaurantJobListener generalRestaurantJobListener
     ) {
         this.jobRepository = jobRepository;
-        this.standardDataSaveReadAndSaveStep = standardDataSaveReadAndSaveStep;
+        this.generalRestaurantReadAndSaveStep = generalRestaurantReadAndSaveStep;
         this.generalRestaurantJobListener = generalRestaurantJobListener;
     }
 
@@ -35,7 +35,7 @@ public class GeneralRestaurantImportConfig {
     public Job job() throws Exception {
         System.out.println("[JOB] " + JOB_NAME);
         return new JobBuilder(JOB_NAME, jobRepository)
-                .start(standardDataSaveReadAndSaveStep.step())
+                .start(generalRestaurantReadAndSaveStep.step())
                 .listener(generalRestaurantJobListener)
                 .build();
     }

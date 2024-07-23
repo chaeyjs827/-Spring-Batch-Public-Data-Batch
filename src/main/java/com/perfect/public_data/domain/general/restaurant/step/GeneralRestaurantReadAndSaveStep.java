@@ -30,9 +30,9 @@ import java.util.List;
 
 @Configuration
 @Slf4j
-public class StandardDataSaveReadAndSaveStep implements StepExecutionListener {
+public class GeneralRestaurantReadAndSaveStep implements StepExecutionListener {
 
-    private static final String STEP_NAME = "standardDataSaveReadAndSaveStep";
+    private static final String STEP_NAME = "generalRestaurantReadAndSaveStep";
 
     private static final Integer CHUNK_SIZE = 5000;
 
@@ -40,7 +40,7 @@ public class StandardDataSaveReadAndSaveStep implements StepExecutionListener {
     private final PlatformTransactionManager platformTransactionManager;
     private final GerneralRestaurantRepository gerneralRestaurantRepository;
 
-    public StandardDataSaveReadAndSaveStep(
+    public GeneralRestaurantReadAndSaveStep(
             JobRepository jobRepository
             , PlatformTransactionManager platformTransactionManager
             , DataSource datasource

@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -135,7 +136,18 @@ public class GerneralRestaurantRepository {
         jdbcTemplate.batchUpdate(sql, sources);
     }
 
-    public void truncateTable(String tableName) {
 
+    public int getListCount() {
+        String sql = "SELECT COUNT(*) FROM general_restaurant";
+
+        Map<String, Object> params = Map.of();
+
+        return jdbcTemplate.queryForObject(sql, params, Integer.class);
+    }
+
+    public void truncateGeneralRestaurant() {
+        String sql = "TRUNCATE TABLE general_restaurant";
+        Map<String, Object> paramMap = new HashMap<>();
+        jdbcTemplate.update(sql, paramMap);
     }
 }
