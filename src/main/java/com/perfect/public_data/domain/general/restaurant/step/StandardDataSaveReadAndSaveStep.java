@@ -1,7 +1,6 @@
 package com.perfect.public_data.domain.general.restaurant.step;
 
 import com.perfect.public_data.domain.general.restaurant.dto.GeneralRestaurantRow;
-import com.perfect.public_data.domain.general.restaurant.listener.GeneralRestaurantReadListener;
 import com.perfect.public_data.domain.general.restaurant.mapper.GeneralRestaurantLineMapper;
 import com.perfect.public_data.domain.general.restaurant.policy.GeneralRestaurantSkipPolicy;
 import com.perfect.public_data.domain.general.restaurant.repository.GerneralRestaurantRepository;

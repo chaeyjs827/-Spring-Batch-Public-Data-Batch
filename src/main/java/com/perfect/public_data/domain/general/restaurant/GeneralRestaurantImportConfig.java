@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableBatchProcessing(
-        tablePrefix = "public_data_batch_"
+        tablePrefix = "PUBLIC_DATA_BATCH_"
 )
 public class GeneralRestaurantImportConfig {
 
