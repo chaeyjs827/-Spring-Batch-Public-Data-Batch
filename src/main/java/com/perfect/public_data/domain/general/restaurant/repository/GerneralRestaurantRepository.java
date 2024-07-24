@@ -2,6 +2,7 @@ package com.perfect.public_data.domain.general.restaurant.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perfect.public_data.domain.general.restaurant.dto.GeneralRestaurantRow;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -142,7 +143,9 @@ public class GerneralRestaurantRepository {
 
         Map<String, Object> params = Map.of();
 
-        return jdbcTemplate.queryForObject(sql, params, Integer.class);
+        Integer count = jdbcTemplate.queryForObject(sql, params, Integer.class);
+
+        return ObjectUtils.isNotEmpty(count) ? count : 0;
     }
 
     public void truncateGeneralRestaurant() {

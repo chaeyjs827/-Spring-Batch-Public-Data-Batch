@@ -32,14 +32,9 @@ class GerneralRestaurantRepositoryTest {
 
         gerneralRestaurantRepository.insertBulk(generalRestaurantRowList);
 
-        // 결과 확인
         Integer count = gerneralRestaurantRepository.getListCount();
 
-        assertThat(count).isEqualTo(2);
-    }
-
-    @Test
-    void toParameterSource() {
+        assertThat(count).isEqualTo(2); // 데이터 2 row 입력 확인
     }
 
 }

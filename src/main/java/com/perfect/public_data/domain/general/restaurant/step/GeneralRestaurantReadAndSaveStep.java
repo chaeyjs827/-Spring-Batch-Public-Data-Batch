@@ -34,7 +34,7 @@ public class GeneralRestaurantReadAndSaveStep implements StepExecutionListener {
 
     private static final String STEP_NAME = "generalRestaurantReadAndSaveStep";
 
-    private static final Integer CHUNK_SIZE = 5000;
+    private static final Integer CHUNK_SIZE = 50000;
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
@@ -67,6 +67,7 @@ public class GeneralRestaurantReadAndSaveStep implements StepExecutionListener {
     @Bean(STEP_NAME + "reader")
     @StepScope
     public FlatFileItemReader<GeneralRestaurantRow> reader() throws IOException {
+        gerneralRestaurantRepository.truncateGeneralRestaurant();
         Resource resource = new ClassPathResource("general-restaurant/head_5000.csv");
 
         if (!resource.exists()) {
