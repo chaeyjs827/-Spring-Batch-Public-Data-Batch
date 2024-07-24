@@ -1,5 +1,6 @@
 package com.perfect.public_data.domain.general.restaurant.partitioner;
 
+import com.perfect.public_data.global.util.CsvUtil;
 import org.springframework.batch.core.partition.support.Partitioner;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.core.io.Resource;
@@ -16,8 +17,8 @@ public class GeneralRestaurantPartitioner implements Partitioner {
     private final Resource resource;
     private final int partitionSize;
 
-    public GeneralRestaurantPartitioner(Resource resource, int partitionSize) {
-        this.resource = resource;
+    public GeneralRestaurantPartitioner(int partitionSize) {
+        this.resource = CsvUtil.getGeneralRestaurantCsv();
         this.partitionSize = partitionSize;
     }
 
@@ -27,19 +28,32 @@ public class GeneralRestaurantPartitioner implements Partitioner {
         int totalLines = countLinesInFile();
 
         int partitionNumber = 0;
-        for (int i = 0; i < totalLines; i += partitionSize) {
-            ExecutionContext context = new ExecutionContext();
-            context.putInt("startLine", i);
-            context.putInt("endLine", Math.min(i + partitionSize, totalLines));
-            context.putString("filePath", resource.getFilename());
-            partitions.put("partition" + partitionNumber, context);
-            partitionNumber++;
+        try {
+            for (int i = 1; i < totalLines; i += partitionSize) {
+                ExecutionContext context = new ExecutionContext();
+                context = checkStartLine(context, i);
+                context.putInt("endLine", Math.min((i + partitionSize) - 1, totalLines));
+                context.putString("filePath", resource.getURI().getPath());
+
+                partitions.put("partition" + partitionNumber, context);
+                partitionNumber++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         return partitions;
     }
 
-    private int countLinesInFile() {
+    public ExecutionContext checkStartLine(ExecutionContext context, int startLine) {
+        if (startLine == 1) {
+            startLine = 2;
+        }
+        context.putInt("startLine", startLine);
+        return context;
+    }
+
+    public int countLinesInFile() {
         int lines = 0;
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))) {

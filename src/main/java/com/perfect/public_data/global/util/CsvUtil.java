@@ -1,5 +1,6 @@
 package com.perfect.public_data.global.util;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import java.io.BufferedReader;
@@ -17,6 +18,12 @@ public class CsvUtil {
                 throw new IllegalArgumentException("CSV file is empty or missing header");
             }
         }
+    }
+
+    public static Resource getGeneralRestaurantCsv() {
+//        return new ClassPathResource("general-restaurant/all.csv");
+//        return new ClassPathResource("general-restaurant/head_50000.csv");
+        return new ClassPathResource("general-restaurant/head_5000.csv");
     }
 
 }
