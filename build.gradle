@@ -68,3 +68,16 @@ jacocoTestReport {
         html.outputLocation.set(file("${buildDir}/jacocoHtml"))
     }
 }
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.8 // 최소 커버리지 비율 설정 (80%)
+            }
+            includes = [
+                    'com/perfect/public_data/domain/general/restaurant/repository/*'
+            ]
+        }
+    }
+}

@@ -22,11 +22,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Configuration
@@ -74,10 +71,6 @@ public class GeneralRestaurantReadAndSaveStep implements StepExecutionListener {
         if (!resource.exists()) {
             throw new FileNotFoundException("파일이 존재하지 않습니다. : " + resource.getFilename());
         }
-
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)
-        );
 
         return new FlatFileItemReaderBuilder<GeneralRestaurantRow>()
                 .name("personItemReader")
