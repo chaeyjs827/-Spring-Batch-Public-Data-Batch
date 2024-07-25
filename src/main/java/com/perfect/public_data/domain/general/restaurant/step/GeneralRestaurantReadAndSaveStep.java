@@ -4,6 +4,7 @@ import com.perfect.public_data.domain.general.restaurant.dto.GeneralRestaurantRo
 import com.perfect.public_data.domain.general.restaurant.mapper.GeneralRestaurantLineMapper;
 import com.perfect.public_data.domain.general.restaurant.policy.GeneralRestaurantSkipPolicy;
 import com.perfect.public_data.domain.general.restaurant.repository.GerneralRestaurantRepository;
+import com.perfect.public_data.global.enums.FileFullPathEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecutionListener;
@@ -34,7 +35,7 @@ public class GeneralRestaurantReadAndSaveStep implements StepExecutionListener {
 
     private static final String STEP_NAME = "generalRestaurantReadAndSaveStep";
 
-    private static final Integer CHUNK_SIZE = 50000;
+    private static final Integer CHUNK_SIZE = 5000;
 
     private final JobRepository jobRepository;
     private final PlatformTransactionManager platformTransactionManager;
@@ -68,7 +69,7 @@ public class GeneralRestaurantReadAndSaveStep implements StepExecutionListener {
     @StepScope
     public FlatFileItemReader<GeneralRestaurantRow> reader() throws IOException {
         gerneralRestaurantRepository.truncateGeneralRestaurant();
-        Resource resource = new ClassPathResource("general-restaurant/head_5000.csv");
+        Resource resource = new ClassPathResource(FileFullPathEnum.GENERAL_RESTAURANT_FILE.getFilePath());
 
         if (!resource.exists()) {
             throw new FileNotFoundException("파일이 존재하지 않습니다. : " + resource.getFilename());
