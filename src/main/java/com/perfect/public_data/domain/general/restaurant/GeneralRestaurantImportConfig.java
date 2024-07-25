@@ -35,7 +35,7 @@ public class GeneralRestaurantImportConfig {
     public Job job() throws Exception {
         System.out.println("[JOB] " + JOB_NAME);
         return new JobBuilder(JOB_NAME, jobRepository)
-                .start(generalRestaurantReadAndSaveStep.stepManager())
+                .start(generalRestaurantReadAndSaveStep.step())
                 .listener(generalRestaurantJobListener)
                 .build();
     }
