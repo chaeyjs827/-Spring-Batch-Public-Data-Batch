@@ -70,7 +70,7 @@
     *  특별히 가공을 하는 로직이나, 외부 API 등을 호출하는 부분이 없기 떄문에 성능 이슈가 예측되지 않아 따로 사용하지 않았습니다.
  
 # 4. 실행 가이드
-1. docker engine 다운로드
+1. docker engine 다운로드 (https://docs.docker.com/engine/install/)
 2. project import
 3. docker-compose 실행(project root/docker 이동 및 docker-compose up 실행)
 4. src/main/resources/general-restaurant 디렉토리에 csv 파일명을 'all.csv' 로 변경하여 저장
