@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum FileFullPathEnum {
 
-    GENERAL_RESTAURANT_FILE("general_restaurant", "general-restaurant/head_50000.csv");
+    GENERAL_RESTAURANT_FILE("general_restaurant", "general-restaurant/all.csv");
 
     private final String name;
     private final String filePath;

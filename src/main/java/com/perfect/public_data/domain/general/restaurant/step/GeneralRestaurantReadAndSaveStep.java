@@ -6,8 +6,7 @@ import com.perfect.public_data.domain.general.restaurant.policy.GeneralRestauran
 import com.perfect.public_data.domain.general.restaurant.repository.GerneralRestaurantRepository;
 import com.perfect.public_data.global.enums.FileFullPathEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.JobScope;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.repository.JobRepository;
@@ -54,7 +53,7 @@ public class GeneralRestaurantReadAndSaveStep implements StepExecutionListener {
     public Step step() throws Exception {
         System.out.println("[STEP] " + STEP_NAME);
         return new StepBuilder(STEP_NAME, jobRepository)
-                .<GeneralRestaurantRow, GeneralRestaurantRow> chunk(CHUNK_SIZE, platformTransactionManager)
+                .<GeneralRestaurantRow, GeneralRestaurantRow>chunk(CHUNK_SIZE, platformTransactionManager)
                 .reader(reader())
                 .writer(writer())
                 .faultTolerant()
@@ -145,4 +144,11 @@ public class GeneralRestaurantReadAndSaveStep implements StepExecutionListener {
         return new GeneralRestaurantSkipPolicy();
     }
 
+    @Override
+    public ExitStatus afterStep(StepExecution stepExecution) {
+        if (stepExecution.getStatus() == BatchStatus.FAILED) {
+            gerneralRestaurantRepository.truncateGeneralRestaurant();
+        }
+        return stepExecution.getExitStatus();
+    }
 }
