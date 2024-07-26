@@ -67,5 +67,5 @@
 1. docker engine 다운로드 (https://docs.docker.com/engine/install/)
 2. project import
 3. docker-compose 실행(project root/docker 이동 및 docker-compose up 실행)
-4. src/main/resources/general-restaurant 디렉토리에 csv 파일명을 'all.csv' 로 변경하여 저장
-5. PublicDataApplication 실행 시 Job 자동 실행
+4. src/main/resources/general-restaurant 디렉토리에 csv 파일명을 'all.csv' 로 변경하여 저장(https://www.data.go.kr/data/15096283/standard.do csv파일 다운로드. 용량 약 1GB)
+6. PublicDataApplication 실행 시 Job 자동 실행
