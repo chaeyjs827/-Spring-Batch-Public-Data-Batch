@@ -44,3 +44,6 @@ bin/
 
 ### Query DSL ###
 /src/main/generated/*
+/src/main/resources/general-restaurant/all.csv
+/src/main/resources/general-restaurant/head_5000.csv
+/src/main/resources/general-restaurant/head_50000.csv

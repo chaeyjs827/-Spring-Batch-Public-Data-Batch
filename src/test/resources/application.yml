@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  sql:
+    init:
+      mode: always  # 항상 초기화 스크립트 실행
+      schema-locations: classpath:sql/h2-config-schema.sql, classpath:sql/schema.sql  # 스키마 초기화 SQL 스크립트 위치
